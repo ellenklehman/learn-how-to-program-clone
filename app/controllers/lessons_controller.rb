@@ -35,6 +35,7 @@ class LessonsController < ApplicationController
     @lessons = Lesson.all
     @lesson = Lesson.new(params[:lesson])
     @section = Section.new
+    @chapter = Chapter.new
     if @lesson.save
       redirect_to("/admin/#{@lesson.id}")
     else
@@ -46,6 +47,7 @@ class LessonsController < ApplicationController
     @lessons = Lesson.all
     @lesson = Lesson.find(params[:id])
     if @lesson.update(params[:lesson])
+      flash[:notice] = "Lesson updated!"
       redirect_to("/admin/#{@lesson.id}")
     else
       render('lessons/edit.html.erb')
@@ -55,6 +57,7 @@ class LessonsController < ApplicationController
   def destroy
     @lesson = Lesson.find(params[:id])
     @lesson.destroy
+    flash[:notice] = "Lesson deleted."
     redirect_to("/admin")
   end
 

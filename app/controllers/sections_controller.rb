@@ -5,6 +5,7 @@ class SectionsController < ApplicationController
     @lesson = Lesson.new
     @section = Section.new(params[:section])
     if @section.save
+      flash[:notice] = "Section added!"
       redirect_to("/admin")
     else
       render('lessons/admin.html.erb')

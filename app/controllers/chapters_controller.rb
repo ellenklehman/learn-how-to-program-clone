@@ -6,6 +6,7 @@ class ChaptersController < ApplicationController
     @section = Section.new
     @chapter = Chapter.new(params[:chapter])
     if @chapter.save
+      flash[:notice] = "Chapter added!"
       redirect_to("/admin")
     else
       render('lessons/admin.html.erb')

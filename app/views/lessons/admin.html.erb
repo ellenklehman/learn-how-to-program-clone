@@ -16,40 +16,14 @@
   <% end %>
 </ul>
 
-<% if @lesson.errors.any? %>
-  <p>Please fix errors:</p>
-  <ul>
-    <% @lesson.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
+<%= render('layouts/errors', :object => @lesson) %>
 
-<% if @section.errors.any? %>
-  <p>Please fix errors:</p>
-  <ul>
-    <% @section.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
+<%= render('layouts/errors', :object => @section) %>
 
-<% if @chapter.errors.any? %>
-  <p>Please fix errors:</p>
-  <ul>
-    <% @chapter.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
+<%= render('layouts/errors', :object => @chapter) %>
 
 <form id="new_lesson" action="/lessons" method="post">
-  <label for="lesson_name">Name of Lesson</label>
-  <input id="lesson_name" name="lesson[name]" type="text" value="<%= @lesson.name %>">
-  <label for="lesson_text">Text of Lesson</label>
-  <input id="lesson_text" name="lesson[text]" type="text" value="<%= @lesson.text %>">
-  <label for="lesson_number">Lesson Number</label>
-  <input id="lesson_number" name="lesson[number]" type = "integer" value="<%= @lesson.number %>">
+  <%= render('form_lessons') %>
   <select form="new_lesson" name="lesson[section_id]">
     <% @sections.each do |section| %>
       <option value="<%= section.id %>"><%= section.chapter.name %>: <%= section.name %></option>
