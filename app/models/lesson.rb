@@ -1,5 +1,8 @@
 class Lesson < ActiveRecord::Base
   validates :name, :presence => true
+  validates :number, numericality: { only_integer: true }
+  belongs_to :section
+
 
   def next
     ordered_lessons = Lesson.all.order(:number)

@@ -1,23 +1,39 @@
 class LessonsController < ApplicationController
   def index
-    @lessons = Lesson.all.order(:number)
+    @chapters = Chapter.all
+    # @lessons = Lesson.all.order(:number)
     render('lessons/toc.html.erb')
   end
 
   def admin
+    @chapters = Chapter.all
+    @sections = Section.all
     @lessons = Lesson.all.order(:number)
     @lesson = Lesson.new
+    @section = Section.new
     render('lessons/admin.html.erb')
   end
 
   def show
     @lesson = Lesson.find(params[:id])
+    @sections = Section.all
+    @selected = Section.all.map do |section|
+      if section == Section.find(@lesson.section_id)
+        "selected"
+      else
+        ""
+      end
+    end
+
     render('lessons/edit.html.erb')
   end
 
   def create
+    @chapters = Chapter.all
+    @sections = Section.all
     @lessons = Lesson.all
     @lesson = Lesson.new(params[:lesson])
+    @section = Section.new
     if @lesson.save
       redirect_to("/admin/#{@lesson.id}")
     else
@@ -25,7 +41,8 @@ class LessonsController < ApplicationController
     end
   end
 
-  def edit
+  def update
+    @lessons = Lesson.all
     @lesson = Lesson.find(params[:id])
     if @lesson.update(params[:lesson])
       redirect_to("/admin/#{@lesson.id}")

@@ -1,24 +1,63 @@
 <h1>Table of contents</h1>
 
 <ul>
-  <% @lessons.each do |lesson| %>
-    <li><a href="admin/<%= lesson.id %>"><%= lesson.number %>.<%= lesson.name %></a></li>
+  <% @chapters.each do |chapter| %>
+    <li><%= chapter.name %></li>
+    <ul>
+      <% chapter.sections.each do |section| %>
+        <li><%= section.name %></li>
+        <ul>
+          <% section.lessons.each do |lesson| %>
+            <li><a href= "admin/<%= lesson.id%>"><%= lesson.number %>.<%= lesson.name %></a></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </ul>
   <% end %>
 </ul>
 
-
-<form action="/admin" method="post">
-  <label for="lesson_name">Name of Lesson</label>
-  <input id="lesson_name" name="lesson[name]" type="text" value="<%= @lesson.name %>">
-  <label for="lesson_text">Text of Lesson</label>
-  <input id="lesson_text" name="lesson[text]" type="text" value="<%= @lesson.text %>">
-  <button>Create Lesson</button>
-  <% if @lesson.errors.any? %>
+<% if @lesson.errors.any? %>
   <p>Please fix errors:</p>
   <ul>
     <% @lesson.errors.full_messages.each do |message| %>
     <li><%= message %></li>
     <% end %>
   </ul>
-  <% end %>
+<% end %>
+
+<% if @section.errors.any? %>
+  <p>Please fix errors:</p>
+  <ul>
+    <% @section.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<form id="new_lesson" action="/lessons" method="post">
+  <label for="lesson_name">Name of Lesson</label>
+  <input id="lesson_name" name="lesson[name]" type="text" value="<%= @lesson.name %>">
+  <label for="lesson_text">Text of Lesson</label>
+  <input id="lesson_text" name="lesson[text]" type="text" value="<%= @lesson.text %>">
+  <label for="lesson_number">Lesson Number</label>
+  <input id="lesson_number" name="lesson[number]" type = "integer" value="<%= @lesson.number %>">
+  <select form="new_lesson" name="lesson[section_id]">
+    <% @sections.each do |section| %>
+      <option value="<%= section.id %>"><%= section.chapter.name %>: <%= section.name %></option>
+    <% end %>
+  </select>
+  <button>Create Lesson</button>
 </form>
+
+<form id="new_section" action="/sections" method="post">
+  <label for="section_name">Name of Section</label>
+  <input id="section_name" name="section[name]" type="text" value="<%= @section.name %>">
+  <select form="new_section" name="section[chapter_id]">
+    <% @chapters.each do |chapter| %>
+      <option value="<%= chapter.id %>"><%= chapter.name %></option>
+    <% end %>
+  </select>
+  <button>Create Section</button>
+</form>
+
+
