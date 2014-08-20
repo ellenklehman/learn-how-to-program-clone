@@ -2,7 +2,7 @@
 
 <ul>
   <% @lessons.each do |lesson| %>
-    <li><a href="admin/<%= lesson.id %>"><%= lesson.name %></a></li>
+    <li><a href="admin/<%= lesson.id %>"><%= lesson.number %>.<%= lesson.name %></a></li>
   <% end %>
 </ul>
 

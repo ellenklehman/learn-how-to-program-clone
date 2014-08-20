@@ -1,11 +1,11 @@
 class LessonsController < ApplicationController
   def index
-    @lessons = Lesson.all
+    @lessons = Lesson.all.order(:number)
     render('lessons/toc.html.erb')
   end
 
   def admin
-    @lessons = Lesson.all
+    @lessons = Lesson.all.order(:number)
     @lesson = Lesson.new
     render('lessons/admin.html.erb')
   end
@@ -38,5 +38,20 @@ class LessonsController < ApplicationController
     @lesson = Lesson.find(params[:id])
     @lesson.destroy
     redirect_to("/admin")
+  end
+
+  def display
+    @lesson = Lesson.find_by(name: params[:name])
+    if @lesson.next == nil
+      @next = @lesson
+      @previous = @lesson.previous
+    elsif @lesson.previous == nil
+      @next = @lesson.next
+      @previous = @lesson
+    else
+      @next = @lesson.next
+      @previous = @lesson.previous
+    end
+    render('lessons/show.html.erb')
   end
 end
