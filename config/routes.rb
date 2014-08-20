@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  match('/table-of-contents', {:via => :get, :to => 'lessons#index'})
+  match('/', {:via => :get, :to => 'lessons#index'})
   match('/admin', {:via => :get, :to => 'lessons#admin'})
   match('/lessons', {:via => :post, :to => 'lessons#create'})
   match('/sections', {:via => :post, :to => 'sections#create'})
