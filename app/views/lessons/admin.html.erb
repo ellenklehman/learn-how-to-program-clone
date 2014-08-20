@@ -34,6 +34,15 @@
   </ul>
 <% end %>
 
+<% if @chapter.errors.any? %>
+  <p>Please fix errors:</p>
+  <ul>
+    <% @chapter.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <form id="new_lesson" action="/lessons" method="post">
   <label for="lesson_name">Name of Lesson</label>
   <input id="lesson_name" name="lesson[name]" type="text" value="<%= @lesson.name %>">
@@ -60,4 +69,8 @@
   <button>Create Section</button>
 </form>
 
-
+<form id="new_chapter" action="/chapters" method="post">
+  <label for="chapter_name">Name of Chapter</label>
+  <input id="chapter_name" name="chapter[name]" type="text" value="<%= @chapter.name %>">
+  <button>Create Chapter</button>
+</form>

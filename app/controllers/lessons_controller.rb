@@ -11,6 +11,7 @@ class LessonsController < ApplicationController
     @lessons = Lesson.all.order(:number)
     @lesson = Lesson.new
     @section = Section.new
+    @chapter = Chapter.new
     render('lessons/admin.html.erb')
   end
 
