@@ -1,0 +1,24 @@
+<h1>Table of contents</h1>
+
+<ul>
+  <% @lessons.each do |lesson| %>
+    <li><%= lesson.name %></li>
+  <% end %>
+</ul>
+
+
+<form action="/admin" method="post">
+  <label for="lesson_name">Name of Lesson</label>
+  <input id="lesson_name" name="lesson[name]" type="text" value="<%= @lesson.name %>">
+  <label for="lesson_text">Text of Lesson</label>
+  <input id="lesson_text" name="lesson[text]" type="text" value="<%= @lesson.text %>">
+  <button>Create Lesson</button>
+  <% if @lesson.errors.any? %>
+  <p>Please fix errors:</p>
+  <ul>
+    <% @lesson.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+  <% end %>
+</form>
