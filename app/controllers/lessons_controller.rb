@@ -24,4 +24,13 @@ class LessonsController < ApplicationController
       render('lessons/admin.html.erb')
     end
   end
+
+  def edit
+    @lesson = Lesson.find(params[:id])
+    if @lesson.update(params[:lesson])
+      redirect_to("/admin/#{@lesson.id}")
+    else
+      render('lessons/edit.html.erb')
+    end
+  end
 end
